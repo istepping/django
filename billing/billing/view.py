@@ -1,6 +1,8 @@
 #  -*- coding: utf-8 -*-
 from django.http import HttpResponse
 import json
+import algo.bill as billing
+import numpy as np
 
 
 def get_action(request):
@@ -14,14 +16,17 @@ def get_action(request):
         param5 = request.GET['param5']
         param6 = request.GET['param6']
         # 调用算法
+        class_ratio = billing.predict(np.array(
+            [round(float(param1), 2), round(float(param2), 2), round(float(param3), 2), round(float(param4), 2),
+             round(float(param5), 2), round(float(param6), 2)]))
         context['message'] = 'success'
         context['status'] = '1'
-        context['1'] = '0.7'
-        context['2'] = '0.8'
-        context['3'] = '0.9'
-        context['4'] = '0.5'
-        context['5'] = '0.5'
-        context['6'] = '0.6'
+        context['1'] = class_ratio[0]
+        context['2'] = class_ratio[1]
+        context['3'] = class_ratio[2]
+        context['4'] = class_ratio[3]
+        context['5'] = class_ratio[4]
+        context['6'] = class_ratio[5]
         return HttpResponse(json.dumps(context), content_type='application/json')
     else:
         context['message'] = 'param error!'

@@ -18,4 +18,4 @@ pip install django
 ## 创建一个项目
 django-admin startproject HelloWorld
 ## 启动项目
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 127.0.0.1:8000

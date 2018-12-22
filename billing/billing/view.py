@@ -21,12 +21,12 @@ def get_action(request):
              round(float(param5), 2), round(float(param6), 2)]))
         context['message'] = 'success'
         context['status'] = '1'
-        context['1'] = class_ratio[0]
-        context['2'] = class_ratio[1]
-        context['3'] = class_ratio[2]
-        context['4'] = class_ratio[3]
-        context['5'] = class_ratio[4]
-        context['6'] = class_ratio[5]
+        context['aReason'] = str(class_ratio[0] * 100) + "%"
+        context['aImpluse'] = str(class_ratio[1] * 100) + "%"
+        context['aRandom'] = str(class_ratio[2] * 100) + "%"
+        context['aHabit'] = str(class_ratio[3] * 100) + "%"
+        context['aCollection'] = str(class_ratio[4] * 100) + "%"
+        context['aImagine'] = str(class_ratio[5] * 100) + "%"
         return HttpResponse(json.dumps(context), content_type='application/json')
     else:
         context['message'] = 'param error!'

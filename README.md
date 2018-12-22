@@ -19,3 +19,7 @@ pip install django
 django-admin startproject HelloWorld
 ## 启动项目
 python manage.py runserver 127.0.0.1:8000
+## 快速配置billing
+1. 安装anaconda
+2. 依赖django
+3. 启动python manage.py runserver 127.0.0.1:8000

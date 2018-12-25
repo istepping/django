@@ -1,5 +1,20 @@
 from urllib import request
 from urllib import parse
+import json
+
+
+def get_visual_data(start_city, end_city, date):
+    response = json.load(get_airplane_data(start_city, end_city, date))
+    print(response)
+    item = {
+        "from": {"name": response.result[0].fromCityName, "coordinates": [113.270793, 23.135308]},
+        "to": {"name": response.result[0].toCityName, "coordinates": [112.612787, 27.317599]},
+        "count": 1
+    }
+    data = list()
+    data.append(item)
+    print(data)
+    return data
 
 
 def get_airplane_data(start_city, end_city, date):

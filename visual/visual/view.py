@@ -12,11 +12,9 @@ def get_visual_data(request):
     response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
     response["Access-Control-Max-Age"] = "1000"
     response["Access-Control-Allow-Headers"] = "*"
-    if 'startCity' in request.GET and 'endCity' in request.GET:
+    if 'startCity' in request.GET:
         start_city = request.GET['startCity']
-        end_city = request.GET['endCity']
-        date = request.GET['date']
-        res = data.get_visual_data(start_city, end_city, date)
+        res = data.get_visual_data(start_city)
         response.write(json.dumps(res))
         return response
     else:
@@ -52,7 +50,7 @@ def get_airplane_data(request):
     if 'startCity' in request.GET and 'endCity' in request.GET:
         start_city = request.GET['startCity']
         end_city = request.GET['endCity']
-        date = request.GET['date']
+        date = "2018-12-21"
         res = data.get_airplane_data(start_city, end_city, date)
         response = HttpResponse(res, content_type='application/json')
         response["Access-Control-Allow-Origin"] = "*"

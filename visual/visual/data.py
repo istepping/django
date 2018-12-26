@@ -1,30 +1,47 @@
 from urllib import request
 from urllib import parse
 import json
+import time
 
 
-def get_visual_data(start_city, end_city, date):
-    response = json.load(get_airplane_data(start_city, end_city, date))
-    print(response)
-    item = {
-        "from": {"name": response.result[0].fromCityName, "coordinates": [113.270793, 23.135308]},
-        "to": {"name": response.result[0].toCityName, "coordinates": [112.612787, 27.317599]},
-        "count": 1
-    }
+def get_lng_and_lat(city):
+    city = parse.quote(city)
+    url = "http://api.map.baidu.com/geocoder?key=37492c0ee6f924cb5e934fa08c6b1676&&output=json&address=" + city
+    with request.urlopen(url) as f:
+        res = f.read()
+        data = json.loads(res.decode('utf-8'))
+    return [data["result"]["location"]["lng"], data["result"]["location"]["lat"]]
+
+
+def get_visual_data(start_city):
+    date = "2018-12-21"
     data = list()
-    data.append(item)
+    end_city = ["上海", "北京", "合肥", "福建", "兰州", "贵阳", "石家庄", "武汉", "长沙", "长春", "吉林", "南京", "南昌", "沈阳", "济南",
+                "太原", "郑州", "四川", "杭州", "昆明"]
+    lng_and_lat = get_lng_and_lat(start_city)
+    for end in end_city:
+        # response = json.loads(get_airplane_data(start_city, end, date))
+        print(end)
+        if end != start_city:
+            item = {
+                "from": {"name": start_city, "coordinates": lng_and_lat},
+                "to": {"name": end, "coordinates": get_lng_and_lat(end)},
+                "count": 1
+            }
+            data.append(item)
     print(data)
     return data
 
 
 def get_airplane_data(start_city, end_city, date):
     # 数据请求
+    print(start_city)
+    print(end_city)
     start_city = parse.quote(start_city)
     end_city = parse.quote(end_city)
     url = "http://apicloud.mob.com/flight/line/query?key=520520test&start=" + start_city + "&end=" + end_city
     with request.urlopen(url) as f:
         res = f.read()
-        print(res.decode('utf-8'))
         return res.decode('utf-8')
 
 

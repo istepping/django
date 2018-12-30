@@ -10,7 +10,20 @@ def get_lng_and_lat(city):
     with request.urlopen(url) as f:
         res = f.read()
         data = json.loads(res.decode('utf-8'))
+        print(data)
     return [data["result"]["location"]["lng"], data["result"]["location"]["lat"]]
+
+
+def get_visual_data_with_end(start_city, end_city):
+    data = list()
+    print(end_city)
+    item = {
+        "from": {"name": start_city, "coordinates": get_lng_and_lat(start_city)},
+        "to": {"name": end_city, "coordinates": get_lng_and_lat(end_city)},
+        "count": 1
+    }
+    data.append(item)
+    return data
 
 
 def get_visual_data(start_city):

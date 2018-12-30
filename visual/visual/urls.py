@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('get_airplane_data', view.get_airplane_data),
     path('get_weather_data', view.get_weather_data),
-    path('get_visual_data', view.get_visual_data)
+    path('get_visual_data', view.get_visual_data),
+    path('get_visual_data_with_end',view.get_visual_data_with_end)
 ]

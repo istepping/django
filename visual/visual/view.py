@@ -4,6 +4,28 @@ from django.http import HttpResponse
 from . import data
 
 
+def get_visual_data_with_end(request):
+    context = dict()
+    request.encoding = 'utf-8'
+    response = HttpResponse(content_type='application/json')
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+    if 'startCity' in request.GET and "endCity" in request.GET:
+        start_city = request.GET['startCity']
+        end_city = request.GET["endCity"]
+        print(end_city)
+        res = data.get_visual_data_with_end(start_city, end_city)
+        response.write(json.dumps(res))
+        return response
+    else:
+        context['message'] = 'param error!'
+        context['status'] = '0'
+        response.write(json.dumps(context))
+        return response
+
+
 def get_visual_data(request):
     context = dict()
     request.encoding = 'utf-8'
